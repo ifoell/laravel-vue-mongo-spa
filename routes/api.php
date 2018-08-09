@@ -14,7 +14,7 @@ use Illuminate\Http\Request;
 */
 
 
-Route::apiResource('posts', 'PostController');
+Route::apiResource('post', 'PostController');
 
 Route::group(['middleware' => 'guest:api'], function () {
     Route::post('login', 'Auth\LoginController@login');

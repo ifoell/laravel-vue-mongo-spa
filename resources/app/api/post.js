@@ -1,11 +1,19 @@
 import axios from '../utils/axios';
 
 export function retrievePosts(params) {
-  return axios.get('/api/posts/', {
+  return axios.get('/api/post/', {
     params,
   });
 }
 
-export function createPost() {
-  return axios.get('/api/posts');
+export function retrievePost(postId) {
+  return axios.get(`/api/post/${postId}`);
+}
+
+export function performUpdate({ _id, ...params}) {
+  return axios.put(`/api/post/${_id}`, params);
+}
+
+export function performeCreate(params) {
+  return axios.post('/api/post/', params);
 }

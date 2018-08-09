@@ -3,6 +3,8 @@ import Router from 'vue-router';
 import Home from '@/views/Home.vue';
 import Login from '@/views/Auth/Login.vue';
 import Dashboard from '@/views/Dashboard.vue';
+import PostPage from '@/views/Admin/PostPage.vue';
+import PostFormPage from '@/views/Admin/PostFormPage.vue';
 import requiresAuth from './middlewares/requiresAuth';
 import checkAuth from './middlewares/checkAuth';
 import notAuthenticated from './middlewares/notAuthenticated';
@@ -46,6 +48,32 @@ const router = new Router({
         before: ['requiresAuth'],
         after: [],
       },
+      children: [
+        {
+          path: 'posts/new',
+          component: PostFormPage,
+          meta: {
+            before: ['requiresAuth'],
+            after: [],
+          },
+        },
+        {
+          path: 'posts/:postId',
+          component: PostFormPage,
+          meta: {
+            before: ['requiresAuth'],
+            after: [],
+          },
+        },
+        {
+          path: 'posts/',
+          component: PostPage,
+          meta: {
+            before: ['requiresAuth'],
+            after: [],
+          },
+        },
+      ],
     },
   ],
 });

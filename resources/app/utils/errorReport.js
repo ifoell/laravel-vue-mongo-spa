@@ -1,8 +1,6 @@
 export default function report(err) {
-  this.$message.error({
-    message: 'Sorry, we had a problem whilst processing your request, please try again',
-    center: true,
-  });
+  /* eslint-disable */
+  alert('Sorry, we had a problem whilst processing your request, please refresh the page and try again.');
   if (process.env.NODE_ENV !== 'production') {
     console.log(err);
   } else {

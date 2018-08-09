@@ -8,11 +8,13 @@ use App\Http\Requests\PostRequest;
 
 class PostController extends Controller
 {
-    public function __construct() {
-        //$this->middleware('auth:api');
+    public function __construct()
+    {
+        $this->middleware('auth:api')->except('index');
     }
 
-    public function index(Request $request) {
+    public function index(Request $request) : array
+    {
         $perPage = (int) $request->input('perPage', 2);
         $page = (int) $request->input('page', 1);
 
@@ -22,25 +24,28 @@ class PostController extends Controller
         ];
     }
 
-    public function show(Post $post) {
+    public function show(Post $post) : Post
+    {
         return $post;
     }
 
-    protected function save(PostRequest $request) {
-
-    }
-
-    public function store(PostRequest $request) {
-
-    }
-
-    public function update(PostRequest $request) {
+    public function store(PostRequest $request) : Post
+    {
         $post = new Post($request->only(['title', 'content']));
-        $post->user()->associate(\Auth::user());
-        return $post->save();
+        $post->created_at = \Carbon\Carbon::now();
+        $post->author()->associate($request->user());
+        $post->save();
+        return $post;
     }
 
-    public function destroy() {
+    public function update(PostRequest $request, Post $post) : Post
+    {
+        $post->fill($request->only(['title', 'content']))->save();
+        return $post;
+    }
 
+    public function destroy(Post $post)
+    {
+        $post->delete();
     }
 }

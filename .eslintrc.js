@@ -4,8 +4,9 @@ module.exports = {
     node: true
   },
   'extends': [
-    'plugin:vue/essential',
-    'airbnb-base'
+    'airbnb-base',
+    'eslint:recommended',
+    'plugin:vue/recommended',
   ],
   rules: {
     'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',

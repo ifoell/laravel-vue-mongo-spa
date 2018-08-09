@@ -12,8 +12,6 @@ class PostSeeder extends Seeder
     public function run()
     {
         $admin = factory(App\User::class, 1)->create(['email' => 'admin@test.com'])->first();
-        factory(App\Post::class, 100)->create(['author_id' => $admin->_id])->each(function($p) use($admin) {
-          $p->comments()->saveMany(factory(App\Comment::class, 3)->make());
-        });
+        factory(App\Post::class, 100)->create(['author_id' => $admin->_id]);
     }
 }
