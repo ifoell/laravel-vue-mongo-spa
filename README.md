@@ -6,7 +6,7 @@ cp .env.example .env
 
 php artisan key:generate && php artisan jwt:secret && php artisan db:seed
 
-yarn install && yarn build
+yarn install && yarn prod
 
 ```
 
