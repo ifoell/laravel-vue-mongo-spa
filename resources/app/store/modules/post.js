@@ -2,7 +2,8 @@ import {
   retrievePosts,
   retrievePost,
   performUpdate,
-  performeCreate,
+  performCreate,
+  performDelete,
 } from '../../api/post';
 import * as types from '../mutation-types';
 
@@ -33,10 +34,17 @@ const actions = {
   },
 
   async savePost({ commit }, params) {
-    const action = params._id ? performUpdate : performeCreate;
+    const action = params._id ? performUpdate : performCreate;
     const response = await action(params);
     if (response.status === 200) {
       await commit(types.SET_POST, response.data);
+    }
+    return response;
+  },
+  async deletePost({ commit }, postId) {
+    const response = await performDelete(postId);
+    if (response.status === 200) {
+      await commit(types.REMOVE_POST, postId);
     }
     return response;
   },
@@ -50,6 +58,9 @@ const mutations = {
   },
   [types.SET_POST](state, post) {
     state.current = post;
+  },
+  [types.REMOVE_POST](state, postId) {
+    state.list = state.list.filter(p => p._id !== postId);
   },
 };
 

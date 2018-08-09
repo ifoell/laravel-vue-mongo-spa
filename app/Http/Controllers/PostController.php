@@ -19,7 +19,7 @@ class PostController extends Controller
         $page = (int) $request->input('page', 1);
 
         return [
-          'posts' => Post::with(['author'])->take($perPage)->skip($perPage * ($page-1))->orderBy('created_at')->get(),
+          'posts' => Post::with(['author'])->take($perPage)->skip($perPage * ($page-1))->orderBy('created_at', 'desc')->get(),
           'total' => Post::count(),
         ];
     }
@@ -38,8 +38,9 @@ class PostController extends Controller
         return $post;
     }
 
-    public function update(PostRequest $request, Post $post) : Post
+    public function update(PostRequest $request, $postId) : Post
     {
+        $post = Post::with('author')->findOrFail($postId);
         $post->fill($request->only(['title', 'content']))->save();
         return $post;
     }

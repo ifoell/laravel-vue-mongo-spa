@@ -6,6 +6,9 @@
     <el-form-item prop="password">
       <el-input type="password" v-model="form.password" placeholder="Password"></el-input>
     </el-form-item>
+    <el-row type="flex" justify="center" class="hint">
+      <el-tag>email: admin@test.com password: secret</el-tag>
+    </el-row>
     <el-row type="flex" justify="center">
       <el-button type="primary" @click="login">Login</el-button>
     </el-row >
@@ -56,3 +59,13 @@ export default {
   },
 };
 </script>
+
+<style scoped lang="less">
+.hint{
+  > span {
+    width: 100%;
+    text-align: center;
+  }
+  margin-bottom: 20px;
+}
+</style>

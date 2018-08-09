@@ -3,27 +3,26 @@
     :data="posts"
     style="width: 100%"
   >
-    <el-table-column
-      type="index">
-    </el-table-column>
+    <el-table-column type="index" />
     <el-table-column
       sortable
       label="Created at"
       prop="created_at"
       width="180"
       :formatter="formatDate"
-    >
-    </el-table-column>
+     />
     <el-table-column
       label="Author"
       prop="author.name"
-      width="180">
-    </el-table-column>
+      width="180" />
     <el-table-column
       label="Title"
-      prop="title">
-    </el-table-column>
-    <el-table-column label="Actions" fixed="right" width="180">
+      prop="title"/>
+    <el-table-column
+      label="Actions"
+      fixed="right"
+      width="180"
+    >
       <template slot-scope="scope">
         <el-button
           size="mini"
@@ -31,7 +30,7 @@
         <el-button
           size="mini"
           type="danger"
-          @click="handleDelete(scope.$index, scope.row)">Delete</el-button>
+          @click="handleDelete(scope.row._id)">Delete</el-button>
       </template>
     </el-table-column>
   </el-table>
@@ -42,10 +41,10 @@ import VueMarkdown from 'vue-markdown';
 import moment from 'moment';
 
 export default {
+  name: 'PostList',
   components: {
     'vue-markdown': VueMarkdown,
   },
-  name: 'PostList',
   props: {
     posts: Array,
   },
@@ -56,8 +55,19 @@ export default {
     handleEdit(postId) {
       this.$router.push(`/admin/posts/${postId}`);
     },
-    handleDelete(index, row) {
-      console.log(index, row);
+    handleDelete(postId) {
+      this.$confirm('Are you sure you want to delete this post?', 'Warning', {
+        confirmButtonText: 'Delete',
+        cancelButtonText: 'Cancel',
+        type: 'warning'
+      }).then(() => {
+        this.$store.dispatch('post/deletePost', postId).then(() => {
+          this.$message({
+            type: 'success',
+            message: 'Delete completed'
+          });
+        });
+      }).catch(() => {});
     }
   }
 };
